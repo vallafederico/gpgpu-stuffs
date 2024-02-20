@@ -10,7 +10,7 @@ export const params = {
 
 export default class {
   time = 0;
-  mouse = { x: 0, y: 0, ex: 0, ey: 0 };
+  mouse = { x: 0, y: 0, ex: 0, ey: 0, sp: 0, esp: 0 };
   constructor() {
     this.vp = {
       container: document.querySelector('[data-gl="c"]'),
@@ -58,6 +58,8 @@ export default class {
 
     this.mouse.ex = lerp(this.mouse.ex, this.mouse.x, 0.1);
     this.mouse.ey = lerp(this.mouse.ey, this.mouse.y, 0.1);
+    this.mouse.esp = lerp(this.mouse.esp, this.mouse.sp, 0.05);
+    this.mouse.esp *= 0.999;
 
     // console.log(this.mouse.x, this.mouse.y);
 
@@ -72,9 +74,29 @@ export default class {
   }
 
   initEvents() {
+    let lastX = 0,
+      lastY = 0,
+      lastTime = Date.now();
+    let velocityX = 0,
+      velocityY = 0;
+
     window.addEventListener("mousemove", (e) => {
       this.mouse.x = (e.clientX / this.vp.w) * 2 - 1;
       this.mouse.y = -(e.clientY / this.vp.h) * 2 + 1;
+
+      const deltaX = e.clientX - lastX;
+      const deltaY = e.clientY - lastY;
+
+      // Calculate velocity in pixels per second
+      velocityX = deltaX;
+      velocityY = deltaY;
+
+      // Update last position and time for the next calculation
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      // this.mouse.sp = e.movementX + e.movementY;
+      this.mouse.sp = Math.abs(velocityX) + Math.abs(velocityY);
     });
   }
 

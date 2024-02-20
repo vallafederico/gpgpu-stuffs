@@ -2,6 +2,8 @@ import { Program, Texture } from "ogl";
 import vertex from "./vertex.vert";
 import fragment from "./fragment.frag";
 
+import { map } from "../../../util/math";
+
 export default class extends Program {
   constructor(gl, options = {}) {
     super(gl, {
@@ -15,6 +17,7 @@ export default class extends Program {
       u_time: { value: 0 },
       u_mouse: { value: [0, 0] },
       u_diff: { value: new Texture(gl) },
+      u_speed: { value: 0 },
     };
   }
 
@@ -24,5 +27,11 @@ export default class extends Program {
 
   set mouse(m) {
     this.uniforms.u_mouse.value = m;
+  }
+
+  set speed(sp) {
+    // console.log(Math.abs(sp));
+    this.uniforms.u_speed.value = map(sp, 0, 20, 0, 1);
+    // console.log(this.uniforms.u_speed.value);
   }
 }

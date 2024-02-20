@@ -15,5 +15,6 @@ export default class extends Mesh {
   render(t) {
     this.program.time = t;
     this.program.mouse = [app.gl.mouse.ex, app.gl.mouse.ey];
+    this.program.speed = app.gl.mouse.esp;
   }
 }
