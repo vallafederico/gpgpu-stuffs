@@ -4,7 +4,10 @@ import Material from "./mat/_quad";
 export class Quad extends Mesh {
   constructor(gl, diff = null) {
     super(gl, {
-      geometry: new Plane(gl),
+      geometry: new Plane(gl, {
+        width: 2,
+        height: 2,
+      }),
       program: new Material(gl),
     });
 
@@ -24,9 +27,9 @@ export class Quad extends Mesh {
 
     this.program.resolution = [this.gl.vp.w, this.gl.vp.h];
 
-    // screen ratio
-    this.scale.x = (this.gl.vp.w / this.gl.vp.h) * 2;
-    this.scale.y = 2;
+    // // screen ratio
+    // this.scale.x = (this.gl.vp.w / this.gl.vp.h) * 2;
+    // this.scale.y = 2;
   }
 
   render(t) {

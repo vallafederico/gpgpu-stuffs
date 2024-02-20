@@ -19,8 +19,8 @@ export class Scene extends Transform {
     this.quad.setParent(this);
 
     const opt = {
-      width: 720,
-      height: 720,
+      width: this.gl.vp.w,
+      height: this.gl.vp.h,
     };
 
     this.screens = [new Screen(this.gl), new Screen(this.gl)];

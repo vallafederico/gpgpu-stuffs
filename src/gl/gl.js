@@ -5,7 +5,7 @@ import { Scene } from "./_scene.js";
 import { lerp } from "../util/math";
 
 export const params = {
-  clearColor: [0, 0, 0, 1],
+  clearColor: [0.0, 0.0, 0.0, 1],
 };
 
 export default class {
@@ -64,6 +64,7 @@ export default class {
     this.controls?.update();
     this.scene?.render(this.time);
 
+    this.gl.clearColor(...params.clearColor);
     this.renderer.render({
       scene: this.scene,
       camera: this.camera,
